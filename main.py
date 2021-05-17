@@ -4,8 +4,6 @@ from enum import Enum
 from const.color import color
 from const.meta import meta
 
-
-
 class ArgvEnum:
 	def __print_color_title(text: str):
 		print(color.BOLD + color.BLUE + text + color.END)
