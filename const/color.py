@@ -3,43 +3,43 @@ from .constant import constant
 
 class __ConstColor(object):
    @constant
-   def PURPLE():
+   def PURPLE() -> str:
       return '\033[95m'
 
    @constant
-   def CYAN():
+   def CYAN() -> str:
       return '\033[96m'
 
    @constant
-   def DARKCYAN():
+   def DARKCYAN() -> str:
       return '\033[36m'
 
    @constant
-   def BLUE():
+   def BLUE() -> str:
       return '\033[94m'
 
    @constant
-   def GREEN():
+   def GREEN() -> str:
       return '\033[92m'
 
    @constant
-   def YELLOW():
+   def YELLOW() -> str:
       return '\033[93m'
 
    @constant
-   def RED():
+   def RED() -> str:
       return '\033[91m'
 
    @constant
-   def BOLD():
+   def BOLD() -> str:
       return '\033[1m'
 
    @constant
-   def UNDERLINE():
+   def UNDERLINE() -> str:
       return '\033[4m'
 
    @constant
-   def END():
+   def END() -> str:
       return '\033[0m'
 
 color = __ConstColor()
