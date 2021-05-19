@@ -111,25 +111,39 @@ categories = __ConstCategories()
 
 
 """
-var list = document.getElementsByClassName('sub clearfix').item(0).children
-var mainKey = '土產品'
-var mainValue = 'native-goods'
-var dictName = mainValue.replaceAll('-', '_')
-var result = '# ' + mainKey + ' ' + mainValue + '\n'
-result += 'class ' + mainValue + '(object):\n'
-result += '   def ' + dictName + '() -> Dict[str, Dict[str, str]]:\n'
-result += '      list = {}\n'
-result += "      list['name'] = '" + mainKey + "'\n"
-result += "      list['id'] = '" + mainValue + "'\n\n"
-result += '      ' + dictName + ' = {}\n'
 
-for (let item of list) {
-   var targer = item.querySelector('a')
-    var name = targer.text.replaceAll('\n', '').replaceAll('  ', '')
-    var path = targer.href.substring(targer.href.lastIndexOf('/') + 1).slice(0, -5)
-    result += '      ' + dictName + "['" + path + "'] = '" + name + "'\n"
+var list = document.getElementsByClassName('category-list').item(0).children.item(0).children
+var result = ''
+for (let block of list) {
+    var node = block.children.item(0).children.item(0)
+    var title = node.text
+    var url = node.href.slice(0, -1)
+    var cid = url.substring(url.lastIndexOf('/') + 1)
+
+    var list = block.children.item(1).children
+    var mainKey = title.replaceAll('\n', '').replaceAll(' ', '')
+    var mainValue = cid.replaceAll('\n', '')
+    var dictName = mainValue.replaceAll('-', '_')
+    result += '\n# ' + mainKey + ' ' + mainValue + '\n'
+    result += 'class ' + mainValue + '(object):\n'
+    result += '   def ' + dictName + '() -> Dict[str, Dict[str, str]]:\n'
+    result += '      list = {}\n'
+    result += "      list['name'] = '" + mainKey + "'\n"
+    result += "      list['id'] = '" + mainValue + "'\n\n"
+    result += '      ' + dictName + ' = {}\n'
+
+    for (let item of list) {
+       var targer = item.querySelector('a')
+        var name = targer.text.replaceAll('\n', '').replaceAll('  ', '')
+        var path = targer.href.substring(targer.href.lastIndexOf('/') + 1).slice(0, -5)
+        result += '      ' + dictName + "['" + path + "'] = '" + name + "'\n"
+    }
+    result += "\n      list['sub'] = " + dictName
+    result += '\n      return list\n'
 }
-result += "\n      list['sub'] = " + dictName
-result += '\n      return list\n'
+
 console.log(result)
+
+
+
 """

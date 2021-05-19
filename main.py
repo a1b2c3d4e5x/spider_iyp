@@ -4,19 +4,20 @@ from enum import Enum
 from const.color import color
 from const.meta import meta
 from const.area_ids import area
-
 from const.categories import categories
+
+from core.spider_iyp import Spider_ipy
 
 class ArgvParser:
    def __print_color_title(self, text: str):
       print(color.BOLD + color.BLUE + text + color.END)
 
    def __print_color_description(self, preText: str, postText: str):
-      print(color.BOLD + color.DARKCYAN + '--' + preText + ':' + color.END, postText)
+      print('  ' + color.BOLD + color.DARKCYAN + '--' + preText + ':' + color.END, postText)
 
    # 使用主要爬蟲功能
    def spider(self, main_category: str, sub_category: str, area_id: int = 0):
-      print('spider', main_category, sub_category, area_id)
+      Spider_ipy.spider(main_category, sub_category, area_id)
 
    # 列出主類別列表
    def categories(self):
