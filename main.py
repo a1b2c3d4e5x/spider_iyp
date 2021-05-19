@@ -1,6 +1,5 @@
 
 import sys 
-from enum import Enum
 from const.color import color
 from const.meta import meta
 from const.area_ids import area
@@ -17,7 +16,7 @@ class ArgvParser:
 
    # 使用主要爬蟲功能
    def spider(self, main_category: str, sub_category: str, area_id: int = 0):
-      Spider_ipy.spider(main_category, sub_category, area_id)
+      Spider_ipy.spider_list(main_category, sub_category, area_id)
 
    # 列出主類別列表
    def categories(self):

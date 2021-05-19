@@ -1,5 +1,5 @@
 
-from typing import Any, List, Dict, Union
+from typing import Any, List, Dict
 from .constant import constant
 
 from .sub_categories.life.food_catering import FoodCatering
