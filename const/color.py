@@ -44,5 +44,5 @@ class __ConstColor(object):
 
 color = __ConstColor()
 
-
-
+def output_error(text: str):
+   print(color.RED + text + color.END)
