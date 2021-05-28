@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 from const.color import output_error
-
+from concurrent.futures import ThreadPoolExecutor
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -99,6 +99,7 @@ class Spider_ipy(object):
             if False == os.path.isdir(main_cate_folder):
                 os.mkdir(main_cate_folder)
             sub_cate_file = result_folder + '/' + main_category + '/' + sub_category + '.csv'
+            sub_cate_log = result_folder + '/' + main_category + '/__log__.csv'
 
         except:
             to_log('無法建立資料夾: ' + main_category + ', ' + sub_category)
@@ -117,8 +118,6 @@ class Spider_ipy(object):
                 # 取得網頁資料
                 pageRequest = requests.get(target_url, headers = headers)
                 pageRequest.encoding = pageRequest.apparent_encoding
-
-                print('  [PAGE] ' + str(page))
 
             except:
                 to_log('無法 request 列表: ' + target_url)
@@ -175,6 +174,14 @@ class Spider_ipy(object):
             
             # 爬店家 ipy 內容頁，取回有 Email 的資訊
             iyp_result = []
+
+            """
+            with ThreadPoolExecutor(max_workers = 5) as executor:
+                time.sleep((random.random() + 0.5) * 2)
+                results = executor.map(Spider_ipy.spider_content, data['url'])
+            """
+
+
             for data in store_data_array:
                 if 'https://www.iyp.com.tw/' in data['url']:
                     print(' [FETCH] ' + data['name'], data['url'])
@@ -197,6 +204,13 @@ class Spider_ipy(object):
             page += 1
             time.sleep(3)
 
-        to_log('[DONE] ' + main_category + ', ' + sub_category)
-        to_log('[TOTAL] count: ' + str(total_count) + ', email: ' + str(total_email))
+        to_log('  [DONE] cate: ' + main_category + ', sub-cate: ' + sub_category + ', total: ' + str(total_count) + ', email: ' + str(total_email))
+
+        # 記錄這一次的 Log
+        fetch_log = [(str(total_count), str(total_email), sub_category, fixed_url)]
+        
+
+        df_log = pd.DataFrame(fetch_log, columns=['TOTAL', 'EMAIL', 'SUB_CATEGORY', 'URL'])
+        with open(sub_cate_log, mode = 'a') as f:
+            df_log.to_csv(f, header = f.tell() == 0, index = False)
 
