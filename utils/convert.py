@@ -17,6 +17,9 @@ def pack_all_to_excel(folder: str, save_as: str):
 
         if os.path.isfile(csv_path):
             sheet_name = csv_name[:-4]
+            if 30 < len(sheet_name):
+                sheet_name = sheet_name[:30]
+
             if 30 < len(csv_path):
                 temp_path = folder + '/__temp__.csv'
                 shutil.copy(csv_path, temp_path)
@@ -31,8 +34,9 @@ def pack_all_to_excel(folder: str, save_as: str):
                 ##print('         ' + csv_path)
 
     log_path = folder + '/__log__.csv'
-    csv = pd.read_csv(log_path)
-    csv.to_excel(writer, sheet_name = 'LOG')
+    if True == os.path.exists(log_path):
+        csv = pd.read_csv(log_path)
+        csv.to_excel(writer, sheet_name = 'LOG')
             
     writer.save()
 

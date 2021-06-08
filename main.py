@@ -80,7 +80,7 @@ class ArgvParser:
       self.__print_color_description(self.area.__name__, '列出地區編號資訊')
       self.__print_color_description(self.about.__name__, '關於此程式的說明')
       self.__print_color_description(self.info.__name__, '關於此程式的開發資訊')
-      self.__print_color_description(self.to_excel.__name__, '把產出的 csv 檔轉存成 excel')
+      self.__print_color_description(self.to_excel.__name__, '將產出的 csv 檔轉存成 excel')
 
 # 判斷輸入的參數指令
 def __argv_is_cmd(fn_name: str) -> bool:

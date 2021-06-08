@@ -270,7 +270,7 @@ class Horticultural(object):
 
       horticultural = {}
       horticultural['florists'] = '花店'
-      horticultural['landscape'] = '園藝設計工程'
+      #horticultural['landscape'] = '園藝設計工程'
       horticultural['garden-nursery'] = '花圃、苗圃'
       horticultural['garden-supplies'] = '園藝器具資材'
 
@@ -278,9 +278,11 @@ class Horticultural(object):
       return list
 
 # 住屋居家 housing
-class Housing(BaseCategory, ConstructionEngineering, BuildingMaterials, BuildingModel, DecorationWorks, 
+class Housing(BaseCategory,
+ConstructionEngineering, BuildingMaterials, BuildingModel, DecorationWorks, 
 AirConditioningEngineering, EngineeringTesting, WaterproofEngineering, BathroomSupplies, KitchenAppliances, 
 LiftingEquipment, BuildingManagement, HomeSecurity, Furniture, FurnitureAndLight, BeddingAndMattress,
-Horticultural):
+Horticultural
+):
    category_name = '住屋居家'
    category_id = 'housing'
