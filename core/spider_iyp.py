@@ -26,51 +26,54 @@ def to_log(text: str):
 
 class Spider_ipy(object):
     def spider_content(url: str) -> str:
-        try:
-            # 組合出要爬得 url
-            iyp_id = url.rsplit('/', 1)[-1]
-            fixed_content_url = 'https://www.iyp.com.tw/' + iyp_id
+        while(True):
+            try:
+                # 組合出要爬得 url
+                iyp_id = url.rsplit('/', 1)[-1]
+                fixed_content_url = 'https://www.iyp.com.tw/' + iyp_id
 
-            # 假資料模擬瀏覽器
-            headers = {'user-agent': UserAgent().random}
+                # 假資料模擬瀏覽器
+                headers = {'user-agent': UserAgent().random}
 
-            # 取得網頁資料
-            pageRequest = requests.get(fixed_content_url, headers = headers)
-            pageRequest.encoding = pageRequest.apparent_encoding
+                # 取得網頁資料
+                pageRequest = requests.get(fixed_content_url, headers = headers)
+                pageRequest.encoding = pageRequest.apparent_encoding
 
-        except:
-            to_log('無法 request 內容: ' + fixed_content_url)
-            traceback.print_exc()
-            return
+            except:
+                to_log('無法 request 內容: ' + fixed_content_url)
+                traceback.print_exc()
 
-        try:
-            soup = BeautifulSoup(pageRequest.text, 'html.parser')
-        except:
-            to_log('無法轉成 html: ' + fixed_content_url)
-            to_log('細節: \n\t' + str(pageRequest).replace('\n', '\n\t'))
-            traceback.print_exc()
-            return
+                time.sleep((random.random() * 10) + 120)
+                continue
 
-        try:
-            # 爬到文章 Email 區塊
-            email_block = soup.find('li', class_ = 'email')
-            if None == email_block:
+            try:
+                soup = BeautifulSoup(pageRequest.text, 'html.parser')
+            except:
+                to_log('無法轉成 html: ' + fixed_content_url)
+                to_log('細節: \n\t' + str(pageRequest).replace('\n', '\n\t'))
+                traceback.print_exc()
                 return
-            email = email_block.select_one('div a').text
 
-            # 爬到文章網站區塊
-            website_block = soup.find('li', class_ = 'website')
-            if None == website_block:
-                website = ''
-            else:
-                website = website_block.select_one('div a').text
+            try:
+                # 爬到文章 Email 區塊
+                email_block = soup.find('li', class_ = 'email')
+                if None == email_block:
+                    return
+                email = email_block.select_one('div a').text
 
-        except TypeError:
-            to_log('Parsing content url 失敗: ' + fixed_content_url)
-            traceback.print_exc()
-            return
+                # 爬到文章網站區塊
+                website_block = soup.find('li', class_ = 'website')
+                if None == website_block:
+                    website = ''
+                else:
+                    website = website_block.select_one('div a').text
 
-        return (email, website)
+            except TypeError:
+                to_log('Parsing content url 失敗: ' + fixed_content_url)
+                traceback.print_exc()
+                return
+
+            return (email, website)
 
     def spider_list(main_category: str, sub_category: str, area_id: int = 0):
         if False == isinstance(area_id, int):
@@ -123,7 +126,7 @@ class Spider_ipy(object):
                 to_log('無法 request 列表: ' + target_url)
                 traceback.print_exc()
 
-                time.sleep(120)
+                time.sleep((random.random() * 10) + 120)
                 continue;
 
             try:

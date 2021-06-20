@@ -239,8 +239,10 @@ class SanitarySupplies(object):
       return list
 
 # 醫療保健 healthcare
-class Healthcare(BaseCategory, HealthAgencies, TcmHealthcare, WesternHealthcare, XRay, DrugsAndMedicine,
-Veterinary, FolkMedicine, Biotechnology, MedicalSupplies, MedicalManagement, MedicalCare, MedicalRemedialTraining,
-NursingServices, BeautySalon, DietAndNutritionCenter, SanitarySupplies):
+class Healthcare(BaseCategory, HealthAgencies, TcmHealthcare, WesternHealthcare,
+XRay, DrugsAndMedicine, Veterinary, FolkMedicine, Biotechnology,
+MedicalSupplies, MedicalManagement, MedicalCare, MedicalRemedialTraining,
+NursingServices, BeautySalon, DietAndNutritionCenter, SanitarySupplies
+):
    category_name = '醫療保健'
    category_id = 'healthcare'

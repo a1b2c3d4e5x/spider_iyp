@@ -1,5 +1,6 @@
 
 import sys 
+import concurrent.futures
 from const.color import color
 from const.meta import meta
 from const.area_ids import area
@@ -20,10 +21,17 @@ class ArgvParser:
 
    def spider_all(self, main_category: str):
       result = categories.sub_categories(main_category)
+      param = []
       if None != result:
          for mid_category in result:
             for key, value in mid_category['sub'].items():
-               Spider_ipy.spider_list(main_category, key)
+               param.append(key)
+
+      if 0 != len(param):
+         helper = lambda scate: Spider_ipy.spider_list(main_category, scate)
+         with concurrent.futures.ThreadPoolExecutor(max_workers = 3) as executor:
+            executor.map(helper, param)
+      
       else:
          self.__print_color_title('Not Found.')
 
